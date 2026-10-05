@@ -1,0 +1,9 @@
+En el **Ejercicio 2**, correspondiente a la calculadora, se utilizó **OOP basada en clases**. Se creó la clase `calculadora`, que contiene las funciones para realizar las operaciones de suma, resta, división y multiplicación. Luego se creó un objeto a partir de esa clase con `new calculadora()`. Por ejemplo, mediante `miCalculadora.sumaa(arreglo)` se puede realizar una suma.
+
+La utilización de una clase permite tener juntas las operaciones que pertenecen a la calculadora y reutilizarlas desde el objeto creado. No se utilizó **herencia**, porque no era necesario crear otra clase de calculadora que tuviera características diferentes. Tampoco se utilizó **polimorfismo**, ya que no había métodos que tuvieran que funcionar de distintas formas según el tipo de objeto.
+
+En el **Ejercicio 3**, correspondiente al organizador de tareas, se utilizó **OOP basada en prototipos**. Se creó `Tarea` para representar cada tarea y `Gestor` para manejar todas las tareas. Por ejemplo, al crear una tarea se guardan datos como el título, descripción, fecha y estado. Luego se agregaron funciones mediante `prototype`, como `Gestor.prototype.agregar` para agregarla al conjunto de tareas.
+
+El uso de prototipos permite que las distintas tareas puedan utilizar los mismos métodos sin tener que crear una función nueva para cada tarea. No se utilizó **herencia**, porque no era necesario crear diferentes tipos de tareas que heredaran características de una tarea general. Tampoco se utilizó **polimorfismo**, porque los métodos no necesitaban comportarse de diferentes maneras dependiendo del objeto.
+
+Por lo tanto, en ambos ejercicios se utilizó OOP para organizar mejor los datos y las funciones, pero en el Ejercicio 2 se hizo mediante **clases** y en el Ejercicio 3 mediante **prototipos**.
