@@ -60,9 +60,6 @@ export async function agrego(arreglo){
             dia=(Number(fechav[0])*10)+(Number(fechav[1]));
             mes=(Number(fechav[3])*10)+(Number(fechav[4]));
             año=(Number(fechav[6]*1000))+(Number(fechav[7])*100)+(Number(fechav[8])*10)+(Number(fechav[9]));
-            dia_d = fechita.getDate();
-            mes_d = fechita.getMonth() + 1;
-            año_d = fechita.getFullYear();
             if((fechav.length!=10) || (fechav[2]!="/") || (fechav[5]!="/") || (fechav.includes(" "))||
                 dia<1||dia>31||mes<1||mes>12|(año < año_d) ||
                         (año === año_d && mes < mes_d) ||
