@@ -5,11 +5,11 @@ import {agrego} from'./Procedimientos.js';
 import{vertareas} from'./Procedimientos.js';
 import{mostrar_segun_contenga}from'./Procedimientos.js';
 import {Gestor} from './Gestor.js';
+import{Tarea}from'./Tarea.js';
 //FUNCION MAIN
 async function main(){
-
-let arreglo=new Gestor();
 let op=[2];
+let o;
 console.log("*******BIENVENIDOS A MANEJO COMO CHANO TU ORGANIZADOR DE TAREAS*******\n");
 do{
 
@@ -22,7 +22,7 @@ do{
      Tmenu();
     op[0]=Number(await rl.question(''));
  }
- console.log("usted selecciono la opcion: "+op[0]+"esta seguro que desea continuar?\ningrese 1 para si\ningrese 2 para no\n");
+ console.log("usted selecciono la opcion: "+op[0]+", esta seguro que desea continuar?\ningrese 1 para si\ningrese 2 para no\n");
  op[2]=Number(await rl.question(''));
  while(op[2]<1||op[2]>2){
     console.log("error ingrese el numero 1 o el numero 2\n");
@@ -33,21 +33,33 @@ do{
     op[0]=6;
  }
  switch(op[0]){
-    case 1:
-            await agrego(arreglo);
-        break;
+  case 1: {
+    let o;
+    do {
+        const tare = Object.create(Tarea);
+        await agrego(Gestor, 1, tare);
+
+        console.log("Desea ingresar otra tarea? Ingrese 1 para si. Ingrese 2 para salir al menu principal");
+        o = Number(await rl.question(''));
+        while (Number.isNaN(o) || o < 1 || o > 2) {
+            console.log("Error, ingrese 1 para ingresar otra tarea. Ingrese 2 para salir al menu principal");
+            o = Number(await rl.question(''));
+        }
+    } while (o !== 2);
+    break;
+}
     case 2:
-         if(arreglo.cantidad()===0){
+         if(Gestor.cantidad()===0){
             console.log("error opcion inviable en este momento,no hay tareas que mostrar");
          }else{
-            await vertareas(arreglo);
+            await vertareas(Gestor);
          }
         break;
     case 3:
-         if(arreglo.cantidad()===0){
+         if(Gestor.cantidad()===0){
             console.log("error opcion inviable en este momento,no hay tareas que mostrar");
          }else{
-            await mostrar_segun_contenga(arreglo);
+            await mostrar_segun_contenga(Gestor);
          }
         break;
     case 4:

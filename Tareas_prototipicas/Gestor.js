@@ -1,31 +1,34 @@
-export const Gestor=function(){
-      this.tareas=[];
-}
+export const Gestor={
+      tareas:[],
 
-Gestor.prototype.existeId = function (id) {
-    return this.tareas.some(t => t.getId() === id);
-};
 
-Gestor.prototype.agregar = function (tarea) {
-    if (this.existeId(tarea.getId())) {
+existeId (id) {
+    return this.tareas.some(t => t.ID === id);
+},
+
+agregar(tarea) {
+    if (this.existeId(tarea.ID)) {
         throw new Error("Ya existe una tarea con ese ID");
     }
     this.tareas.push(tarea);
     this.ordenar();
-};
+},
 
-Gestor.prototype.ordenar = function () {
-    this.tareas.sort((a, b) => a.getTitulo().localeCompare(b.getTitulo()));
-};
-Gestor.prototype.obtenerTodas = function () {
+ ordenar () {
+    this.tareas.sort((a, b) => a.TITULO.localeCompare(b.TITULO));
+},
+
+obtenerTodas(){
     return this.tareas;
-};
-Gestor.prototype.filtrarPorEstado = function (estado) {
-    return this.tareas.filter(t => t.getEstado() === estado);
-};
-   Gestor.prototype.cantidad = function () {
+},
+
+filtrarPorEstado (estado) {
+    return this.tareas.filter(t => t.ESTADO === estado);
+},
+   cantidad () {
        return this.tareas.length;
-   };
-   Gestor.prototype.Existetitulo=function(titulo){ 
-    return this.tareas.filter(t =>t.getTitulo().toLowerCase().includes(titulo.toLowerCase()));
-   };
+   },
+    Existetitulo(titulo){ 
+    return this.tareas.filter(t =>t.TITULO.toLowerCase().includes(titulo.toLowerCase()));
+   },
+}

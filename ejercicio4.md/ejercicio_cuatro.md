@@ -1,9 +1,41 @@
-En el **Ejercicio 2**, correspondiente a la calculadora, se utilizó **OOP basada en clases**. Se creó la clase `calculadora`, que contiene las funciones para realizar las operaciones de suma, resta, división y multiplicación. Luego se creó un objeto a partir de esa clase con `new calculadora()`. Por ejemplo, mediante `miCalculadora.sumaa(arreglo)` se puede realizar una suma.
+Ejercicio 2: Calculadora con clases
 
-La utilización de una clase permite tener juntas las operaciones que pertenecen a la calculadora y reutilizarlas desde el objeto creado. No se utilizó **herencia**, porque no era necesario crear otra clase de calculadora que tuviera características diferentes. Tampoco se utilizó **polimorfismo**, ya que no había métodos que tuvieran que funcionar de distintas formas según el tipo de objeto.
+Clase y objeto. Armé una clase Calculadora que junta en un solo lugar los datos (el resultado y el historial) y las operaciones (sumar, restar, multiplicar, dividir). En el programa principal creé una calculadora con new Calculadora() y la usé todo el tiempo. Si hiciera falta, podría crear otras calculadoras, cada una con su propio resultado e historial.
 
-En el **Ejercicio 3**, correspondiente al organizador de tareas, se utilizó **OOP basada en prototipos**. Se creó `Tarea` para representar cada tarea y `Gestor` para manejar todas las tareas. Por ejemplo, al crear una tarea se guardan datos como el título, descripción, fecha y estado. Luego se agregaron funciones mediante `prototype`, como `Gestor.prototype.agregar` para agregarla al conjunto de tareas.
+Estado propio. La calculadora “recuerda” su resultado y su historial. Cada operación lo actualiza, así el resultado se va acumulando sin tener que pasarlo de una función a otra.
 
-El uso de prototipos permite que las distintas tareas puedan utilizar los mismos métodos sin tener que crear una función nueva para cada tarea. No se utilizó **herencia**, porque no era necesario crear diferentes tipos de tareas que heredaran características de una tarea general. Tampoco se utilizó **polimorfismo**, porque los métodos no necesitaban comportarse de diferentes maneras dependiendo del objeto.
+Abstracción. Quien usa la calculadora solo le pide que sume o muestre el historial, sin saber cómo lo hace por dentro.
 
-Por lo tanto, en ambos ejercicios se utilizó OOP para organizar mejor los datos y las funciones, pero en el Ejercicio 2 se hizo mediante **clases** y en el Ejercicio 3 mediante **prototipos**.
+Encapsulamiento (parcial). Los datos y las operaciones que los modifican están juntos en la misma clase. Pero no usé propiedades privadas, así que desde afuera se podría cambiar el resultado a mano. Está organizado, pero no protegido.
+
+Separación de responsabilidades. La clase solo calcula. Pedir datos, mostrar el menú y el flujo del programa están en otros archivos.
+
+Control de errores. La clase avisa con un error si se intenta dividir por cero, y el programa principal lo atrapa y muestra un mensaje.
+
+No utilicé:
+
+Herencia: hay una sola clase y no había una relación “es un tipo de”. Serviría, por ejemplo, para una calculadora científica basada en esta.
+Polimorfismo: no hay varias clases que respondan distinto al mismo pedido, y agregarlo habría complicado el programa sin necesidad.
+Atributos privados: no eran necesarios para que funcione, aunque protegerían mejor los datos.
+
+
+Ejercicio 3: Gestor de tareas con prototipos
+
+Objetos y prototipos. Creé un objeto Tarea que funciona como molde. Cada tarea nueva se crea a partir de ese molde con Object.create(Tarea) y hereda de él sus métodos y valores por defecto (por ejemplo, estado “Pendiente”). Los métodos existen una sola vez y todas las tareas los comparten, mientras que los datos (título, ID, fechas) son propios de cada una.
+
+Herencia prototípica. Es la herencia propia de JavaScript: cada tarea toma lo del molde y puede cambiarlo con sus propios valores.
+
+Getters y setters. Tarea tiene pares para leer y modificar sus datos como si fueran propiedades comunes. El de dificultad es el mejor ejemplo: recibe 1, 2 o 3 y lo convierte en una, dos o tres estrellas, así el formato siempre es el mismo. También es un encapsulamiento parcial, porque los datos internos siguen siendo accesibles directamente.
+
+Composición. El Gestor guarda un arreglo de tareas y las administra (agregar, buscar, filtrar por estado, ordenar), pero no hereda de ellas: la relación es “tiene tareas”, no “es una tarea”. También controla reglas propias, como no permitir IDs repetidos.
+
+Objeto único. Como el programa necesita un solo gestor, lo definí como un único objeto que comparten todos los archivos, de modo que todos trabajan sobre la misma lista de tareas.
+
+Cada cosa en su lugar. La tarea sabe mostrarse, el gestor sabe guardar y buscar, un archivo se ocupa de hablar con el usuario y otro arma el menú. Cada parte se puede modificar sin romper las demás.
+
+No utilicé:
+
+Herencia entre varios niveles: todas las tareas se comportan igual y solo cambian sus datos, así que no hacía falta, por ejemplo, un tipo “tarea urgente” aparte.
+Polimorfismo: no hay distintos tipos de tarea que reaccionen diferente a lo mismo.
+Constructor con new: usé Object.create porque me permitía escribir los getters y setters de forma directa.
+Datos realmente privados: igual que en la calculadora, la protección es parcial.
