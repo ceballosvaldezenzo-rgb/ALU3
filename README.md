@@ -1,10 +1,15 @@
 # Trabajo Práctico: Programación Orientada a Objetos en JavaScript
 
-Trabajo práctico de POO en JavaScript (Node.js), dividido en tres ejercicios:
+Trabajo práctico de POO en JavaScript (Node.js), dividido en cuatro ejercicios:
 
-1. **Ejercicio 1:** marco teórico sobre objetos y prototipos en JavaScript.
-2. **Ejercicio 2:** calculadora de consola con **clases**.
-3. **Ejercicio 3:** organizador de tareas de consola con **prototipos** (`Object.create`).
+| Ejercicio | Contenido | Archivo / carpeta |
+|-----------|-----------|-------------------|
+| 1 | Marco teórico: objetos y prototipos en JavaScript | [`Ejercicio1.md`](./Ejercicio1.md) |
+| 2 | Calculadora de consola con **clases** | [`calculadora/`](./calculadora) |
+| 3 | Organizador de tareas de consola con **prototipos** | [`Tareas_prototipicas/`](./Tareas_prototipicas) |
+| 4 | Reflexión: características de la POO usadas en los ejercicios 2 y 3 | [`Ejercicio4.md`](./Ejercicio4.md) |
+
+> Ajustá los nombres de los archivos y carpetas si en tu repositorio se llaman distinto.
 
 ---
 
@@ -24,6 +29,8 @@ Trabajo práctico de POO en JavaScript (Node.js), dividido en tres ejercicios:
 ```
 ALU3/
 ├── package.json
+├── Ejercicio1.md                 # Teoría
+├── Ejercicio4.md                 # Reflexión sobre POO
 ├── calculadora/                  # Ejercicio 2
 │   ├── Cmain.js                  # Flujo principal y menú
 │   ├── Calculadora.js            # Clase Calculadora
@@ -38,8 +45,6 @@ ALU3/
     ├── Tmenu.js                  # Menú de opciones
     └── readline.js               # Entrada por consola
 ```
-
-> Ajustá los nombres de las carpetas si en tu repositorio están organizadas distinto.
 
 ---
 
@@ -58,6 +63,8 @@ node Tareas_prototipicas/Tmain.js
 ---
 
 ## Ejercicio 1: Objetos y prototipos en JavaScript
+
+*(Versión completa en [`Ejercicio1.md`](./Ejercicio1.md))*
 
 ### 1. Generalización simbólica: ¿cuáles son las reglas escritas del lenguaje?
 
@@ -83,9 +90,7 @@ node Tareas_prototipicas/Tmain.js
 
 ## Ejercicio 2: Calculadora con clases
 
-Calculadora de consola que permite sumar, restar, multiplicar y dividir una lista de números, ver el historial de operaciones y limpiar el resultado.
-
-### Menú
+Calculadora de consola que permite sumar, restar, multiplicar y dividir una lista de números, ver el historial de operaciones y limpiar el resultado. Está implementada con una **clase** (`Calculadora`) que guarda el resultado y el historial.
 
 | Opción | Acción |
 |--------|--------|
@@ -97,26 +102,13 @@ Calculadora de consola que permite sumar, restar, multiplicar y dividir una list
 | 6 | Limpiar la calculadora |
 | 7 | Salir |
 
-### Características de POO utilizadas
-
-- **Clase e instanciación:** la clase `Calculadora` agrupa los datos (resultado e historial) y las operaciones. En el programa principal se crea con `new Calculadora()`.
-- **Estado propio:** la calculadora recuerda su resultado y su historial; cada operación los actualiza mediante `this`.
-- **Abstracción:** quien la usa solo pide `sumar` o `mostrar`, sin conocer cómo se hace por dentro.
-- **Encapsulamiento (parcial):** datos y operaciones están juntos en la clase, pero no se usaron propiedades privadas, por lo que el estado se podría modificar desde afuera.
-- **Separación de responsabilidades:** la clase solo calcula; la interacción con el usuario está en otros archivos.
-- **Control de errores:** `dividir` lanza un error ante una división por cero, y el programa principal lo atrapa con `try/catch`.
-
-### No utilizado
-
-- **Herencia:** hay una sola clase y no existe una relación "es un tipo de". Sería útil, por ejemplo, para una calculadora científica basada en esta.
-- **Polimorfismo:** no hay varias clases que respondan distinto al mismo pedido; agregarlo habría complicado el programa sin necesidad.
-- **Atributos privados:** no eran necesarios para el funcionamiento, aunque protegerían mejor los datos.
+La división por cero lanza un error que el programa principal captura y muestra como mensaje.
 
 ---
 
 ## Ejercicio 3: Organizador de tareas con prototipos
 
-Aplicación de consola para gestionar tareas, hecha con programación orientada a objetos con prototipos.
+Aplicación de consola para gestionar tareas, hecha con programación orientada a objetos con **prototipos**: cada tarea se crea con `Object.create(Tarea)` y un único objeto `Gestor` administra la lista.
 
 ### Funcionalidades
 
@@ -136,26 +128,45 @@ Aplicación de consola para gestionar tareas, hecha con programación orientada 
 
 ### Diseño
 
-- **`Tarea.js`:** objeto literal que funciona como prototipo (molde). Define los valores por defecto, los getters/setters y el método `mostrar()`. Cada tarea se crea con `Object.create(Tarea)`.
+- **`Tarea.js`:** objeto literal que funciona como prototipo (molde). Define los valores por defecto, los getters/setters y el método `mostrar()`.
 - **`Gestor.js`:** objeto único que contiene el arreglo de tareas y las operaciones sobre él: `agregar`, `existeId`, `ordenar`, `obtenerTodas`, `filtrarPorEstado`, `cantidad` y `Existetitulo`.
 - **`Procedimientos.js`:** interacción con el usuario (pedir datos, mostrar listas, editar).
 - **`Tmain.js`:** bucle del menú principal.
 
-### Características de POO utilizadas
+---
 
-- **Objetos y prototipos:** las tareas heredan métodos y valores por defecto del molde `Tarea`. Los métodos existen una sola vez y se comparten; los datos son propios de cada tarea.
-- **Herencia prototípica:** cada tarea toma lo del molde y puede sobrescribirlo con sus propios valores.
-- **Getters y setters:** permiten leer y modificar los datos como propiedades comunes. El de dificultad convierte 1, 2 o 3 en una, dos o tres estrellas. El encapsulamiento es parcial, porque los datos internos siguen siendo accesibles.
-- **Composición:** el `Gestor` "tiene" tareas y las administra, sin heredar de ellas.
-- **Objeto único:** el gestor es un único objeto compartido por todos los módulos, de modo que todos trabajan sobre la misma lista.
-- **Responsabilidad única y modularización:** cada archivo y cada objeto se ocupa de una sola cosa, y se usan módulos ES (`import`/`export`).
+## Ejercicio 4: Características de la POO utilizadas en los ejercicios 2 y 3
 
-### No utilizado
+*(Versión completa en [`Ejercicio4.md`](./Ejercicio4.md))*
 
-- **Herencia entre varios niveles:** todas las tareas se comportan igual y solo cambian sus datos, por lo que no hacía falta un tipo aparte (por ejemplo, "tarea urgente").
-- **Polimorfismo:** no hay distintos tipos de tarea que respondan diferente a un mismo pedido. Se podría aplicar creando un tipo de tarea que redefina cómo se muestra.
-- **Función constructora con `new`:** se usó `Object.create` sobre un objeto literal, lo que permitió escribir los getters y setters de forma directa.
-- **Datos realmente privados:** la protección es parcial, igual que en la calculadora.
+### Ejercicio 2: Calculadora con clases
+
+- **Clase y objeto:** la clase `Calculadora` junta en un solo lugar los datos (resultado e historial) y las operaciones. En el programa principal se crea con `new Calculadora()`. Se podrían crear otras calculadoras, cada una con su propio resultado e historial.
+- **Estado propio:** la calculadora "recuerda" su resultado y su historial; cada operación los actualiza, así el resultado se acumula sin pasarlo de una función a otra.
+- **Abstracción:** quien la usa solo le pide que sume o muestre el historial, sin saber cómo lo hace por dentro.
+- **Encapsulamiento (parcial):** datos y operaciones están juntos en la misma clase, pero no se usaron propiedades privadas, así que desde afuera se podría cambiar el resultado a mano. Está organizado, pero no protegido.
+- **Separación de responsabilidades:** la clase solo calcula; pedir datos, mostrar el menú y el flujo del programa están en otros archivos.
+- **Control de errores:** la clase avisa con un error si se intenta dividir por cero.
+
+**No utilicé:**
+- **Herencia:** hay una sola clase y no había una relación "es un tipo de". Serviría, por ejemplo, para una calculadora científica basada en esta.
+- **Polimorfismo:** no hay varias clases que respondan distinto al mismo pedido, y agregarlo habría complicado el programa sin necesidad.
+- **Atributos privados:** no eran necesarios para que funcione, aunque protegerían mejor los datos.
+
+### Ejercicio 3: Gestor de tareas con prototipos
+
+- **Objetos y prototipos:** `Tarea` es un objeto que funciona como molde. Cada tarea nueva se crea con `Object.create(Tarea)` y hereda sus métodos y valores por defecto (por ejemplo, estado "Pendiente"). Los métodos existen una sola vez y todas las tareas los comparten; los datos (título, ID, fechas) son propios de cada una.
+- **Herencia prototípica:** cada tarea toma lo del molde y puede cambiarlo con sus propios valores.
+- **Getters y setters:** permiten leer y modificar los datos como propiedades comunes. El de dificultad recibe 1, 2 o 3 y lo convierte en una, dos o tres estrellas, así el formato siempre es el mismo. También es un encapsulamiento parcial, porque los datos internos siguen siendo accesibles directamente.
+- **Composición:** el `Gestor` guarda un arreglo de tareas y las administra (agregar, buscar, filtrar por estado, ordenar), pero no hereda de ellas: la relación es "tiene tareas", no "es una tarea". También controla reglas propias, como no permitir IDs repetidos.
+- **Objeto único:** como el programa necesita un solo gestor, es un único objeto que comparten todos los archivos, de modo que todos trabajan sobre la misma lista de tareas.
+- **Cada cosa en su lugar:** la tarea sabe mostrarse, el gestor sabe guardar y buscar, un archivo se ocupa de hablar con el usuario y otro arma el menú.
+
+**No utilicé:**
+- **Herencia entre varios niveles:** todas las tareas se comportan igual y solo cambian sus datos, así que no hacía falta, por ejemplo, un tipo "tarea urgente" aparte.
+- **Polimorfismo:** no hay distintos tipos de tarea que reaccionen diferente a lo mismo. Se podría aplicar creando un tipo de tarea que redefina cómo se muestra, pero en este trabajo todas se comportan igual.
+- **Constructor con `new`:** usé `Object.create` porque me permitía escribir los getters y setters de forma directa.
+- **Datos realmente privados:** igual que en la calculadora, la protección es parcial.
 
 ---
 
