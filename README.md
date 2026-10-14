@@ -172,4 +172,4 @@ Aplicación de consola para gestionar tareas, hecha con programación orientada 
 
 ## Autor
 
-Trabajo realizado por **[Tu nombre]** para la materia **[Nombre de la materia]**.
+Trabajo realizado por Enzo Gabriel Ceballos para la materia Paradigmas de Programacion .
